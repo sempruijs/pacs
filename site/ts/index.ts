@@ -11,6 +11,15 @@ enum Display {
     Word
 }
 
+function randomEnum<T>(anEnum: T): T[keyof T] {
+    const enumValues = Object.keys(anEnum)
+      .map(n => Number.parseInt(n))
+      .filter(n => !Number.isNaN(n)) as unknown as T[keyof T][]
+    const randomIndex = Math.floor(Math.random() * enumValues.length)
+    const randomEnumValue = enumValues[randomIndex]
+    return randomEnumValue;
+  }
+
 function showFruit(fruit: Fruit, display: Display) {
     switch (display) {
         case Display.Emoji: return showFruitAsEmotji(fruit)
@@ -41,5 +50,22 @@ function showFruitAsChar(fruit: Fruit): string {
     return showFruitAsWord(fruit).slice(0, 1)
 }
 
-console.log(showFruit(Fruit.appel, Display.Emoji))
+// Todo: make recursive
+function randomFruitOrderOfLength(length: number): Fruit[] {
+    let order: Fruit[] = []
+    for (let i = 0; i < length; i++) {
+        order.push(randomEnum(Fruit))
+    }
+    return order
+}
+
+function randomFruit(): Fruit {
+    return randomEnum(Fruit)
+}
+
+function showFruitOrder(order: Fruit[], display: Display): string {
+    return order.map(fruit => showFruit(fruit, display)).reduce((p, c) => p + c)
+}
+
+console.log(showFruitOrder(randomFruitOrderOfLength(20), Display.Emoji))
 
