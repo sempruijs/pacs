@@ -65,16 +65,26 @@ function randomFruit(): Fruit {
 
 function fruitOrderToString(order: Fruit[], display: Display): string {
     return order.map(fruit => showFruit(fruit, display)).reduce((p, c) => p + c)
+}       
+
+function renderFruitOrder(order: Fruit[]): void {
+    renderVisualOrder(order)
+    renderAccessibleOrder(order)
 }
 
-function renderFruitString(fruitString: string): void {
-    (document.getElementById("visual-order") as HTMLElement).innerHTML = fruitString
+function renderVisualOrder(order: Fruit[]): void {
+    (document.getElementById("visual-order") as HTMLElement).innerHTML = fruitOrderToString(order, Display.Emoji)
+}
+
+function renderAccessibleOrder(order: Fruit[]): void {
+    (document.getElementById("accessible-order") as HTMLTextAreaElement).value =fruitOrderToString(order, Display.Char)
 }
 
 
 
-console.log(fruitOrderToString(randomFruitOrderOfLength(20), Display.Emoji))
+let displayedFruitOrder: Fruit[] = randomFruitOrderOfLength(20)
 
 window.onload = function() {
-    renderFruitString(fruitOrderToString(randomFruitOrderOfLength(20), Display.Emoji))
+    console.log(displayedFruitOrder)
+    renderFruitOrder(displayedFruitOrder)
 }
