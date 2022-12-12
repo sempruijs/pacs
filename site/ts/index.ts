@@ -63,9 +63,18 @@ function randomFruit(): Fruit {
     return randomEnum(Fruit)
 }
 
-function showFruitOrder(order: Fruit[], display: Display): string {
+function fruitOrderToString(order: Fruit[], display: Display): string {
     return order.map(fruit => showFruit(fruit, display)).reduce((p, c) => p + c)
 }
 
-console.log(showFruitOrder(randomFruitOrderOfLength(20), Display.Emoji))
+function renderFruitString(fruitString: string): void {
+    (document.getElementById("visual-order") as HTMLElement).innerHTML = fruitString
+}
 
+
+
+console.log(fruitOrderToString(randomFruitOrderOfLength(20), Display.Emoji))
+
+window.onload = function() {
+    renderFruitString(fruitOrderToString(randomFruitOrderOfLength(20), Display.Emoji))
+}
