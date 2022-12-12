@@ -77,11 +77,11 @@ function renderFruitOrder(order: Fruit[]): void {
 }
 
 function renderVisualOrder(order: Fruit[]): void {
-    (document.getElementById("visual-order") as HTMLElement).innerHTML = fruitOrderToString(order, Display.Emoji)
+    (document.getElementById("visual-order") as HTMLElement).innerHTML = stringInChunks(fruitOrderToString(order, Display.Emoji), 4)
 }
 
 function renderAccessibleOrder(order: Fruit[]): void {
-    (document.getElementById("accessible-order") as HTMLTextAreaElement).value =fruitOrderToString(order, Display.Char)
+    (document.getElementById("accessible-order") as HTMLTextAreaElement).value =stringInChunks(fruitOrderToString(order, Display.Char), 4)
 }
 
 
