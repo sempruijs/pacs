@@ -67,6 +67,10 @@ function fruitOrderToString(order: Fruit[], display: Display): string {
     return order.map(fruit => showFruit(fruit, display)).reduce((p, c) => p + c)
 }       
 
+function stringInChunks(input: string, chunkSize: number): string {
+    return input.slice(0, chunkSize) + " " + (input.length >= chunkSize ? stringInChunks(input.slice(chunkSize), chunkSize) : "")
+}
+
 function renderFruitOrder(order: Fruit[]): void {
     renderVisualOrder(order)
     renderAccessibleOrder(order)
@@ -83,6 +87,8 @@ function renderAccessibleOrder(order: Fruit[]): void {
 
 
 let displayedFruitOrder: Fruit[] = randomFruitOrderOfLength(20)
+
+
 
 window.onload = function() {
     console.log(displayedFruitOrder)
