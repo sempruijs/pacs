@@ -91,6 +91,5 @@ let displayedFruitOrder: Fruit[] = randomFruitOrderOfLength(20)
 
 
 window.onload = function() {
-    console.log(displayedFruitOrder)
     renderFruitOrder(displayedFruitOrder)
 }
