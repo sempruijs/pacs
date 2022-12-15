@@ -86,9 +86,9 @@ function renderFruitOrder(order: Fruit[]): void {
 }
 
 function renderVisualOrder(order: Fruit[]): void {
-    for (let i = 0; i < 4; i++) {
-        renderLine(fruitOrderToString(order, Display.Char))
-    }
+    const orderInChunks = chunks(order, 4)
+    orderInChunks.forEach(chunk => renderLine(fruitOrderToString(chunk, Display.Char)))
+        
 }
 
 function renderAccessibleOrder(order: Fruit[]): void {
