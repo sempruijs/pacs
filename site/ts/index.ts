@@ -11,6 +11,15 @@ enum Display {
     Word
 }
 
+function chunks<T>(arr: Array<T>, chunkSize: number): Array<Array<T>> {
+    const res: Array<Array<T>> = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+        const chunk = arr.slice(i, i + chunkSize);
+        res.push(chunk);
+    }
+    return res;
+}
+
 function randomEnum<T>(anEnum: T): T[keyof T] {
     const enumValues = Object.keys(anEnum)
       .map(n => Number.parseInt(n))
@@ -67,8 +76,8 @@ function fruitOrderToString(order: Fruit[], display: Display): string {
     return order.map(fruit => showFruit(fruit, display)).reduce((p, c) => p + c)
 }       
 
-function stringInChunks(input: string, chunkSize: number): string {
-    return input.slice(0, chunkSize) + " " + (input.length >= chunkSize ? stringInChunks(input.slice(chunkSize), chunkSize) : "")
+function fruitInChunks(input: string, chunkSize: number): string {
+    return input.slice(0, chunkSize) + (input.length >= chunkSize ? fruitInChunks(input.slice(chunkSize), chunkSize) : "")
 }
 
 function renderFruitOrder(order: Fruit[]): void {
@@ -77,23 +86,33 @@ function renderFruitOrder(order: Fruit[]): void {
 }
 
 function renderVisualOrder(order: Fruit[]): void {
-    (document.getElementById("visual-order") as HTMLElement).innerHTML = stringInChunks(fruitOrderToString(order, Display.Char), 4)  + charToSelectedChar("b")
+    for (let i = 0; i < 4; i++) {
+        renderLine(fruitOrderToString(order, Display.Char))
+    }
 }
 
 function renderAccessibleOrder(order: Fruit[]): void {
-    (document.getElementById("accessible-order") as HTMLTextAreaElement).value =stringInChunks(fruitOrderToString(order, Display.Char), 4)
+    (document.getElementById("accessible-order") as HTMLTextAreaElement).value =fruitInChunks(fruitOrderToString(order, Display.Char), 4)
 }
 
 function charToSelectedChar(char: string): string {
     return `<span id=\"visual-selected\">${char}</span>`
 }
 
+function renderLine(line: string): void {
+    // create element
+    const div: HTMLElement = document.createElement("div")
+    div.innerHTML = line + "<br>"
 
+    // render element
+    const container: HTMLElement = document.getElementById("lines-container")
+    container.appendChild(div)
+
+}
 
 let displayedFruitOrder: Fruit[] = randomFruitOrderOfLength(20)
 
-
-
 window.onload = function() {
     renderFruitOrder(displayedFruitOrder)
+    console.log(chunks(displayedFruitOrder, 4))
 }
