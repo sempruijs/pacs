@@ -11,6 +11,15 @@ enum Display {
     Word
 }
 
+function randomEnum<T>(anEnum: T): T[keyof T] {
+    const enumValues = Object.keys(anEnum)
+      .map(n => Number.parseInt(n))
+      .filter(n => !Number.isNaN(n)) as unknown as T[keyof T][]
+    const randomIndex = Math.floor(Math.random() * enumValues.length)
+    const randomEnumValue = enumValues[randomIndex]
+    return randomEnumValue;
+  }
+
 function chunks<T>(arr: Array<T>, chunkSize: number): Array<Array<T>> {
     const res: Array<Array<T>> = [];
     for (let i = 0; i < arr.length; i += chunkSize) {
@@ -20,14 +29,7 @@ function chunks<T>(arr: Array<T>, chunkSize: number): Array<Array<T>> {
     return res;
 }
 
-function randomEnum<T>(anEnum: T): T[keyof T] {
-    const enumValues = Object.keys(anEnum)
-      .map(n => Number.parseInt(n))
-      .filter(n => !Number.isNaN(n)) as unknown as T[keyof T][]
-    const randomIndex = Math.floor(Math.random() * enumValues.length)
-    const randomEnumValue = enumValues[randomIndex]
-    return randomEnumValue;
-  }
+
 
 function showFruit(fruit: Fruit, display: Display, highlighted: boolean) {
     switch (display) {
