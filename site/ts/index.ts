@@ -29,15 +29,15 @@ function randomEnum<T>(anEnum: T): T[keyof T] {
     return randomEnumValue;
   }
 
-function showFruit(fruit: Fruit, display: Display) {
+function showFruit(fruit: Fruit, display: Display, highlighted: boolean) {
     switch (display) {
-        case Display.Emoji: return showFruitAsEmotji(fruit)
-        case Display.Word: return showFruitAsWord(fruit)
-        default: return showFruitAsChar(fruit)
+        case Display.Emoji: return showFruitAsEmotji(fruit, highlighted)
+        case Display.Word: return showFruitAsWord(fruit, highlighted)
+        default: return showFruitAsChar(fruit, highlighted)
     }
 }
 
-function showFruitAsEmotji(fruit: Fruit): string {
+function showFruitAsEmotji(fruit: Fruit, highlighted: boolean): string {
     switch (fruit) {
         case Fruit.peer: return "🍐"
         case Fruit.appel: return "🍎"
@@ -46,7 +46,7 @@ function showFruitAsEmotji(fruit: Fruit): string {
     }
 }
 
-function showFruitAsWord(fruit: Fruit): string {
+function showFruitAsWord(fruit: Fruit, highlighted: boolean): string {
     switch (fruit) {
         case Fruit.peer: return "peer"
         case Fruit.appel: return "appel"
@@ -55,8 +55,21 @@ function showFruitAsWord(fruit: Fruit): string {
     }
 }
 
-function showFruitAsChar(fruit: Fruit): string {
-    return showFruitAsWord(fruit).slice(0, 1)
+function showFruitAsChar(fruit: Fruit, highlighted: boolean): string {
+    let char: string;
+    switch (fruit) {
+        case Fruit.peer: 
+            char = "p"
+            break
+        case Fruit.appel: 
+            char = "a"
+            break
+        case Fruit.kokosnoot: 
+            char= "k"
+            break
+        default: char = "s"
+    }
+    return highlighted ? `<span id=\"visual-selected\">${char}</span>` : char
 }
 
 // Todo: make recursive
@@ -73,7 +86,7 @@ function randomFruit(): Fruit {
 }
 
 function fruitOrderToString(order: Fruit[], display: Display): string {
-    return order.map(fruit => showFruit(fruit, display)).reduce((p, c) => p + c)
+    return order.map(fruit => showFruit(fruit, display, false)).reduce((p, c) => p + c)
 }       
 
 function fruitInChunks(input: string, chunkSize: number): string {
@@ -87,8 +100,7 @@ function renderFruitOrder(order: Fruit[]): void {
 
 function renderVisualOrder(order: Fruit[]): void {
     const orderInChunks = chunks(order, 4)
-    orderInChunks.forEach(chunk => renderLine(fruitOrderToString(chunk, Display.Char)))
-        
+    orderInChunks.forEach(chunk => renderLine(fruitOrderToString(chunk, Display.Char)))        
 }
 
 function renderAccessibleOrder(order: Fruit[]): void {
@@ -114,5 +126,4 @@ let displayedFruitOrder: Fruit[] = randomFruitOrderOfLength(20)
 
 window.onload = function() {
     renderFruitOrder(displayedFruitOrder)
-    console.log(chunks(displayedFruitOrder, 4))
 }
