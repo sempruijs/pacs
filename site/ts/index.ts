@@ -111,6 +111,14 @@ function renderVisualOrder(order: Fruit[], highlightedIndex: number): void {
 
 function renderAccessibleOrder(order: Fruit[], highlightedIndex: number): void {
     (document.getElementById("accessible-order") as HTMLTextAreaElement).value = orderToAccessibleString(order,4)
+    highlightAccessibleOrder(highlightedIndex)
+}
+
+function highlightAccessibleOrder(index: number): void {
+    const input = (document.getElementById("accessible-order") as HTMLTextAreaElement)
+    input.focus()
+    const charPosition = index + (Math.floor(index / 4))
+    input.setSelectionRange(charPosition, charPosition + 1)
 }
 
 function orderToAccessibleString(order: Fruit[], chunkSize: number): string {
@@ -118,14 +126,13 @@ function orderToAccessibleString(order: Fruit[], chunkSize: number): string {
 }
 
 function flatmapString(array: string[]): string {
-    console.log(array)
     return array[0] += array.length > 1 ? flatmapString(array.slice(1)) : ""
 }
 
 
-function renderFruitOrder(order: Fruit[]): void {
-    renderVisualOrder(order, 0)
-    renderAccessibleOrder(order, 0)
+function renderFruitOrder(order: Fruit[], index: number): void {
+    renderVisualOrder(order, index)
+    renderAccessibleOrder(order, index)
 }
 
 
@@ -152,5 +159,5 @@ function renderLine(line: string): void {
 let displayedFruitOrder: Fruit[] = randomFruitOrderOfLength(20)
 
 window.onload = function() {
-    renderFruitOrder(displayedFruitOrder)
+    renderFruitOrder(displayedFruitOrder, 3)
 }
