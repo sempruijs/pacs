@@ -29,16 +29,6 @@ function chunks<T>(arr: Array<T>, chunkSize: number): Array<Array<T>> {
     return res;
 }
 
-
-
-function showFruit(fruit: Fruit, display: Display, highlighted: boolean) {
-    switch (display) {
-        case Display.Emoji: return showFruitAsEmotji(fruit, highlighted)
-        case Display.Word: return showFruitAsWord(fruit, highlighted)
-        default: return showFruitAsChar(fruit, highlighted)
-    }
-}
-
 function showFruitAsEmotji(fruit: Fruit, highlighted: boolean): string {
     switch (fruit) {
         case Fruit.peer: return "🍐"
@@ -74,6 +64,16 @@ function showFruitAsChar(fruit: Fruit, highlighted: boolean): string {
     return highlighted ? `<span id=\"visual-selected\">${char}</span>` : char
 }
 
+function showFruit(fruit: Fruit, display: Display, highlighted: boolean) {
+    switch (display) {
+        case Display.Emoji: return showFruitAsEmotji(fruit, highlighted)
+        case Display.Word: return showFruitAsWord(fruit, highlighted)
+        default: return showFruitAsChar(fruit, highlighted)
+    }
+}
+
+
+
 // Todo: make recursive
 function randomFruitOrderOfLength(length: number): Fruit[] {
     let order: Fruit[] = []
@@ -87,27 +87,53 @@ function randomFruit(): Fruit {
     return randomEnum(Fruit)
 }
 
-function fruitOrderToString(order: Fruit[], display: Display): string {
-    return order.map(fruit => showFruit(fruit, display, false)).reduce((p, c) => p + c)
-}       
 
 function fruitInChunks(input: string, chunkSize: number): string {
     return input.slice(0, chunkSize) + (input.length >= chunkSize ? fruitInChunks(input.slice(chunkSize), chunkSize) : "")
 }
 
+function renderVisualOrder(order: Fruit[], highlightedIndex: number): void {
+    const lineWidth = 4
+    const display = Display.Char
+    const fruitLines = chunks(order, lineWidth)
+
+    let lines: string[] = []
+    for (let y = 0; y < fruitLines.length; y++) {
+        let line: string = ""
+        for (let x = 0; x < fruitLines[x].length; x++) {
+            line += showFruit(fruitLines[y][x], display, (y * lineWidth) + x == highlightedIndex)
+        }
+        lines.push(line)
+    }
+
+    lines.forEach(line => renderLine(line))
+}
+
+function renderAccessibleOrder(order: Fruit[], highlightedIndex: number): void {
+    (document.getElementById("accessible-order") as HTMLTextAreaElement).value = orderToAccessibleString(order,4)
+}
+
+function orderToAccessibleString(order: Fruit[], chunkSize: number): string {
+    return flatmapString(order.slice(0, chunkSize).map(fruit => showFruit(fruit, Display.Char, false))) + " " + (order.length > chunkSize ? orderToAccessibleString(order.slice(chunkSize), chunkSize) : "")
+}
+
+function flatmapString(array: string[]): string {
+    console.log(array)
+    return array[0] += array.length > 1 ? flatmapString(array.slice(1)) : ""
+}
+
+
 function renderFruitOrder(order: Fruit[]): void {
-    renderVisualOrder(order)
-    renderAccessibleOrder(order)
+    renderVisualOrder(order, 0)
+    renderAccessibleOrder(order, 0)
 }
 
-function renderVisualOrder(order: Fruit[]): void {
-    const orderInChunks = chunks(order, 4)
-    orderInChunks.forEach(chunk => renderLine(fruitOrderToString(chunk, Display.Char)))        
-}
 
-function renderAccessibleOrder(order: Fruit[]): void {
-    (document.getElementById("accessible-order") as HTMLTextAreaElement).value =fruitInChunks(fruitOrderToString(order, Display.Char), 4)
-}
+
+
+// function renderAccessibleOrder(order: Fruit[]): void {
+    // (document.getElementById("accessible-order") as HTMLTextAreaElement).value =
+// }
 
 function charToSelectedChar(char: string): string {
     return `<span id=\"visual-selected\">${char}</span>`
@@ -121,7 +147,6 @@ function renderLine(line: string): void {
     // render element
     const container: HTMLElement = document.getElementById("lines-container")
     container.appendChild(div)
-
 }
 
 let displayedFruitOrder: Fruit[] = randomFruitOrderOfLength(20)
