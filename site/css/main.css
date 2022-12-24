@@ -9,7 +9,8 @@ input {
 }
 
 #visual-selected {
-    color: blue;
+    color: #7070f2;
+    font-size: 20vh;
 }
 
 #lines-container {
