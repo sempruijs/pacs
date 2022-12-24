@@ -13,12 +13,12 @@ enum Display {
 
 function randomEnum<T>(anEnum: T): T[keyof T] {
     const enumValues = Object.keys(anEnum)
-      .map(n => Number.parseInt(n))
-      .filter(n => !Number.isNaN(n)) as unknown as T[keyof T][]
+        .map(n => Number.parseInt(n))
+        .filter(n => !Number.isNaN(n)) as unknown as T[keyof T][]
     const randomIndex = Math.floor(Math.random() * enumValues.length)
     const randomEnumValue = enumValues[randomIndex]
     return randomEnumValue;
-  }
+}
 
 function chunks<T>(arr: Array<T>, chunkSize: number): Array<Array<T>> {
     const res: Array<Array<T>> = [];
@@ -50,14 +50,14 @@ function showFruitAsWord(fruit: Fruit, highlighted: boolean): string {
 function showFruitAsChar(fruit: Fruit, highlighted: boolean): string {
     let char: string;
     switch (fruit) {
-        case Fruit.peer: 
+        case Fruit.peer:
             char = "p"
             break
-        case Fruit.appel: 
+        case Fruit.appel:
             char = "a"
             break
-        case Fruit.kokosnoot: 
-            char= "k"
+        case Fruit.kokosnoot:
+            char = "k"
             break
         default: char = "s"
     }
@@ -110,7 +110,7 @@ function renderVisualOrder(order: Fruit[], highlightedIndex: number): void {
 }
 
 function renderAccessibleOrder(order: Fruit[], highlightedIndex: number): void {
-    (document.getElementById("accessible-order") as HTMLTextAreaElement).value = orderToAccessibleString(order,4)
+    (document.getElementById("accessible-order") as HTMLTextAreaElement).value = orderToAccessibleString(order, 4)
     highlightAccessibleOrder(highlightedIndex)
 }
 
@@ -135,11 +135,17 @@ function renderFruitOrder(order: Fruit[], index: number): void {
     renderAccessibleOrder(order, index)
 }
 
+function clearDom(): void {
+    // clear visual order
+    const container: HTMLElement = document.getElementById("lines-container")
+    container.innerHTML = ""
+}
+
 
 
 
 // function renderAccessibleOrder(order: Fruit[]): void {
-    // (document.getElementById("accessible-order") as HTMLTextAreaElement).value =
+// (document.getElementById("accessible-order") as HTMLTextAreaElement).value =
 // }
 
 function charToSelectedChar(char: string): string {
@@ -156,8 +162,20 @@ function renderLine(line: string): void {
     container.appendChild(div)
 }
 
+
 let displayedFruitOrder: Fruit[] = randomFruitOrderOfLength(20)
 
-window.onload = function() {
-    renderFruitOrder(displayedFruitOrder, 3)
+window.onload = function () {
+    renderFruitOrder(displayedFruitOrder, highlightedFruitIndex)
 }
+
+let highlightedFruitIndex = 0
+
+const interval = setInterval(function () {
+    highlightedFruitIndex == 20 ? highlightedFruitIndex = 0 : highlightedFruitIndex++
+    clearDom()
+    renderFruitOrder(displayedFruitOrder, highlightedFruitIndex)
+}, 1000);
+
+// clearInterval(interval);
+
