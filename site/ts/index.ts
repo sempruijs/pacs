@@ -172,7 +172,7 @@ window.onload = function () {
 let highlightedFruitIndex = 0
 
 const interval = setInterval(function () {
-    highlightedFruitIndex == 20 ? highlightedFruitIndex = 0 : highlightedFruitIndex++
+    highlightedFruitIndex == 19 ? highlightedFruitIndex = 0 : highlightedFruitIndex++
     clearDom()
     renderFruitOrder(displayedFruitOrder, highlightedFruitIndex)
 }, 1000);
