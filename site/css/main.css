@@ -9,6 +9,22 @@ input {
 }
 
 #visual-selected {
-    color: blue;  
+    color: #7070f2;
+    font-size: 20vh;
+}
 
+#lines-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 15vh;
+    letter-spacing: 30pt;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.fruit-line {
+    width: 100%;
+    height: 100%;
 }

@@ -156,6 +156,7 @@ function renderLine(line: string): void {
     // create element
     const div: HTMLElement = document.createElement("div")
     div.innerHTML = line + "<br>"
+    div.className = "fruit-line"
 
     // render element
     const container: HTMLElement = document.getElementById("lines-container")
