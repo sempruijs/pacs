@@ -1,6 +1,7 @@
 # paks
 Accessible music rhythm website
 
+![paks demonstration with braille](./images/PaksWithBrailleDemonstration.gif)
 
 ## Rhythms
 
@@ -25,6 +26,7 @@ On mac, you can turn on VoiceOver with (**cmd F5**)
 1. go to the [website](https://paks.pruijs.net)
 2. Connect a refreshable braille display.
 3. Navigate to the textfield. It is the first item on the page.
+4. Mute sound. This works best with braille.
 
 You can see each fruit described with a character.
 The fruit that is highlighted for visual people is also highlighted with the bottom braille dots. (7 and 8)
