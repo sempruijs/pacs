@@ -28,3 +28,9 @@ input {
     width: 100%;
     height: 100%;
 }
+
+a {
+    text-decoration: none;
+    color: #ffe597;
+    font-size: 15pt;
+}
