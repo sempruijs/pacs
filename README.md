@@ -34,3 +34,29 @@ The fruit that is highlighted for visual people is also highlighted with the bot
 If you do not see any character highlighted, move the arrow keys until it does.
 
 **fun fact**: You can easily connect multiple braille diplays with a mac. Turn on VoiceOver, plug them in and it should work :D
+
+## Develop
+
+Paks works with [nix](https://nixos.org). Make sure you [sign your commits](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits).
+
+1. Instal the tools with the following command:
+
+``` bash
+nix develop
+```
+
+This will the right version of typescript and a typescript-lsp.
+
+2. run tsc in ```/site/ts```:
+``` bash
+cd ./site/ts
+tsc
+```
+
+All your changes will be compiled every time you save your file.
+
+3. Test it. I use [live server plugin for vsc](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer), but you can use whatever you like.
+
+
+
+
