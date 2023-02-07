@@ -10,7 +10,7 @@ input {
 
 #visual-selected {
     color: #ffff00;
-    font-size: 20vh;
+    text-decoration: underline;
 }
 
 #lines-container {
