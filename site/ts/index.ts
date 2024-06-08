@@ -2,7 +2,8 @@ enum Fruit {
     peer,
     appel,
     kokosnoot,
-    sinsappel
+    sinsappel,
+    rest
 }
 
 enum Display {
@@ -34,6 +35,7 @@ function showFruitAsEmotji(fruit: Fruit, highlighted: boolean): string {
         case Fruit.peer: return "🍐"
         case Fruit.appel: return "🍎"
         case Fruit.kokosnoot: return "🥥"
+        case Fruit.rest: return "-"
         default: return "🍊"
     }
 }
@@ -43,6 +45,7 @@ function showFruitAsWord(fruit: Fruit, highlighted: boolean): string {
         case Fruit.peer: return "peer"
         case Fruit.appel: return "appel"
         case Fruit.kokosnoot: return "kokosnoot"
+        case Fruit.rest: return "rust"
         default: return "sinasappel"
     }
 }
@@ -58,6 +61,9 @@ function showFruitAsChar(fruit: Fruit, highlighted: boolean): string {
             break
         case Fruit.kokosnoot:
             char = "k"
+            break
+        case Fruit.rest:
+            char = "-"
             break
         default: char = "s"
     }
