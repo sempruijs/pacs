@@ -135,10 +135,15 @@ function flatmapString(array: string[]): string {
     return array[0] += array.length > 1 ? flatmapString(array.slice(1)) : ""
 }
 
+function playClick() {
+    const audio = new Audio('./click.wav');
+    audio.play();
+}
 
 function renderFruitOrder(order: Fruit[], index: number): void {
     renderVisualOrder(order, index)
     renderAccessibleOrder(order, index)
+    playClick()
 }
 
 function clearDom(): void {
