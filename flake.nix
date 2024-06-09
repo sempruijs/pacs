@@ -32,6 +32,7 @@
               mkdir $out/ts
               mkdir $out/css
               cp ./index.html $out
+              cp ./click.wav $out
               cp -r ./css $out
               cp ./ts/index.js $out/ts
             '';
