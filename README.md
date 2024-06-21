@@ -7,6 +7,7 @@ Accessible music rhythm website
 
 The rhythms are described with dutch fruit names.
 
+- rest (-): - - - -
 - peer (🍐): clap - - -
 - appel (🍎):  clap - clap -
 - kokosnoot (🥥): clap clap clap -
@@ -60,3 +61,4 @@ All your changes will be compiled every time you save your file.
 
 
 
+    
